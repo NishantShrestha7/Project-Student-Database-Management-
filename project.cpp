@@ -8,6 +8,7 @@
 #include <thread>
 #include <algorithm>
 #include <limits>
+#include <iomanip>
 #include "project.h"
 
 using namespace std::literals::chrono_literals;
@@ -16,7 +17,6 @@ bool Student::studentEnrolled(const std::string& studentId , std::vector <Studen
     for ( auto student : studentData){
         if(student.StudentId == studentId){
             return true;
-            break;
         }
     }
     return false;
@@ -164,7 +164,7 @@ void Student::addStudent(const std::string& fileName, std::vector <Student>& stu
     std::string studentId = studentData[studentData.size() - 1].StudentId;
     std::string Id = studentId.substr(1,studentId.length() - 1);
     int intID = stoi(Id) + 1;
-    ss << intID;
+    ss << "S" << std::setw(3) << std::setfill('0') << intID;
     ss >> newStudentId;
 
     file.open(fileName , std::ios::app); //opening file in append mode
@@ -184,7 +184,7 @@ void Student::addStudent(const std::string& fileName, std::vector <Student>& stu
 
     studentData.push_back(student);
 
-    file << "S" + newStudentId << c << student.name << c << student.city << 
+    file << newStudentId << c << student.name << c << student.city <<
     c << student.state << c << student.zip << c << student.course << c << student.score << c << std::endl;
 }
 
@@ -280,22 +280,16 @@ std::string intToRank(const int& rank){
     switch(rank){
         case 1:
             return "First";
-            break;
         case 2:
             return "Second";
-            break;
         case 3:
             return "Third";
-            break;
         case 4:
             return "Fourth";
-            break;
         case 5:
             return "Fifth";
-            break;
         default:
             return "Invalid rank";
-            break;
     }
 }
 
